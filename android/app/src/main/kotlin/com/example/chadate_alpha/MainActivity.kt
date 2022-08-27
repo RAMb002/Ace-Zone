@@ -1,0 +1,6 @@
+package com.example.chadate_alpha
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

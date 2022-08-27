@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "337279651067",
+    "project_id": "chadate-alpha",
+    "storage_bucket": "chadate-alpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337279651067:android:56e8f2512d1f19e805745e",
+        "android_client_info": {
+          "package_name": "com.example.chadate_alpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337279651067-3sqm3tnfvb8ot45jcl3mf8uqo48mne07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF4vTadG2H93R0NzPkPaNxs5U0Oe-_ELM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337279651067-3sqm3tnfvb8ot45jcl3mf8uqo48mne07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
