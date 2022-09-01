@@ -109,6 +109,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> with SingleTi
                     height: bigWidgetGap,
                   ),
                   ImageDisplay(
+                    editStatus: false,
                     context: context,
                   ),
                   Padding(

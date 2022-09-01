@@ -21,7 +21,23 @@ import 'package:flutter/services.dart';
 const height = 8.0;
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  const DetailScreen({
+  Key? key,
+  required this.editStatus,
+  this.photoUrl ="",
+    this.bio="",
+    this.officeAddress ="",
+    this.companyName ="",
+    this.occupation = "",
+
+  }) : super(key: key);
+
+  final bool editStatus;
+  final String photoUrl;
+  final String bio;
+  final String officeAddress;
+  final String companyName;
+  final String occupation;
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -37,6 +53,16 @@ class _DetailScreenState extends State<DetailScreen> {
   final User? _user = FirebaseAuth.instance.currentUser;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _occupationController.text = widget.occupation;
+    _officeAddressController.text = widget.officeAddress;
+    _companyNameController.text = widget.companyName;
+    _bioController.text = widget.bio;
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
     _officeAddressController.dispose();
@@ -50,6 +76,8 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // print(widget.photoUrl + "d");
+
     _occupationController.addListener(() {
       Provider.of<BakaProvider>(context,listen: false).setBakaState();
     });
@@ -79,22 +107,27 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: ListView(
                   children: [
                     ImageDisplay(
+                      editStatus: widget.editStatus,
                       context: context,
+                      photoUrl: widget.photoUrl,
                     ),
                     SizedBox(
                       height: height,
                     ),
                     AuthDetailTextFormField(
+                      editStatus: widget.editStatus,
                         labelText: 'Occupation', controller: _occupationController, validator: (s) {}),
                     SizedBox(
                       height: height,
                     ),
                     AuthDetailTextFormField(
+                        editStatus: widget.editStatus,
                         labelText: 'Office Address', controller: _officeAddressController, validator: (s) {}),
                     SizedBox(
                       height: height,
                     ),
                     AuthDetailTextFormField(
+                        editStatus: widget.editStatus,
                         labelText: 'Company Name', controller: _companyNameController, validator: (s) {}),
                     SizedBox(
                       height: 35,
@@ -105,16 +138,16 @@ class _DetailScreenState extends State<DetailScreen> {
                       maxLines: 3,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black38, width: 1),
+                              borderSide:  BorderSide(color: widget.editStatus ?Theme.of(context).colorScheme.primaryVariant : Colors.black38, width: 1),
                               borderRadius: lBorderRadius),
                           disabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black38, width: 1),
+                              borderSide:  BorderSide(color:widget.editStatus ?Theme.of(context).colorScheme.primaryVariant : Colors.black38, width: 1),
                               borderRadius: lBorderRadius),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black, width: 1.5),
+                              borderSide:  BorderSide(color:widget.editStatus ?Theme.of(context).primaryColorDark : Colors.black, width: 1.5),
                               borderRadius: lBorderRadius),
                           labelText: 'Bio',
-                          labelStyle: TextStyle(color: Colors.black54)),
+                          labelStyle: TextStyle(color:widget.editStatus ?Theme.of(context).colorScheme.primaryVariant : Colors.black54)),
                     ),
                     SizedBox(
                       height: 30,
@@ -126,14 +159,17 @@ class _DetailScreenState extends State<DetailScreen> {
                          FlatButton(
                           color: checkPresence(image) ? Colors.black : Colors.lightBlueAccent,
                           minWidth: double.infinity,
-                          height: lFlatButtonHeight,
+                          height: lFlatButtonHeight -10,
                           padding: EdgeInsets.symmetric(vertical: 10),
                           onPressed: () async {
-                             checkPresence(image) ? Navigator.pop(context) : onPressed(image) ;
+                            if(widget.editStatus){
+                              onPressed(image);
+                            }
+                             else checkPresence(image) ? Navigator.pop(context) : onPressed(image) ;
                           },
                           shape: RoundedRectangleBorder(borderRadius: lBorderRadius),
                           child: Text(
-                            checkPresence(image) ? 'Skip' : 'Next',
+                            widget.editStatus ? "Save" : checkPresence(image) ? 'Skip' : 'Next',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -171,19 +207,20 @@ class _DetailScreenState extends State<DetailScreen> {
         print('ssssssssssssssssssssssssssssssssssssssssd');
       }
 
-      if (_occupationController.text.isNotEmpty) {
+      if ((!widget.editStatus && _occupationController.text.isNotEmpty) || widget.editStatus) {
         await FirebaseUpdate.updateProfileData(userId, _occupationController.text, 'occupation');
         print('ocu updated');
       }
-      if (_officeAddressController.text.isNotEmpty) {
+      if ((!widget.editStatus && _officeAddressController.text.isNotEmpty) || widget.editStatus) {
         await FirebaseUpdate.updateProfileData(userId, _officeAddressController.text, 'officeAddress');
         print('office updated');
       }
-      if (_companyNameController.text.isNotEmpty) {
+      if ((!widget.editStatus &&_companyNameController.text.isNotEmpty) || widget.editStatus) {
         await FirebaseUpdate.updateProfileData(userId, _companyNameController.text, 'companyName');
         print('company updated');
       }
-      if (_bioController.text.isNotEmpty) {
+      if ((!widget.editStatus &&_bioController.text.isNotEmpty) || widget.editStatus) {
+        // if(_bioController.text.isEmpty) _bioController.text="";
        await FirebaseUpdate.updateProfileData(userId, _bioController.text, 'bio');
         print('bio updated');
       }

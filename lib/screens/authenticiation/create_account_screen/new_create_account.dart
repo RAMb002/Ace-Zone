@@ -53,7 +53,7 @@ class _NewCreateAccountScreenMainState extends State<NewCreateAccountScreenMain>
       PasswordScreen(pageController: _pageController),
       PhoneAuthenticationScreen(pageController: _pageController),
       PhoneOtpVerification(pageController: _pageController,),
-      DetailScreen(),
+      DetailScreen(editStatus: false,),
     ];
     print('helloss');
     print( Provider.of<VerificationTruthProvider>(context,listen: false).emailVerificationTruth);

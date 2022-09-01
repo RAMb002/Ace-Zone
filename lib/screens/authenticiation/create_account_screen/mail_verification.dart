@@ -185,6 +185,11 @@ class _MailVerificationScreenState extends State<MailVerificationScreen> with Ti
                           ),
                         ),
                         SizedBox(
+                          height: 10,
+                        ),
+                        Center(child: Text('Please enter an valid Email',style: TextStyle(color: Colors.black54),),),
+
+                        SizedBox(
                           height: 20,
                         ),
                         Form(

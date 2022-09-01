@@ -9,9 +9,13 @@ class ImageDisplay extends StatelessWidget {
   const ImageDisplay({
     Key? key,
     required this.context,
+    required this.editStatus,
+    this.photoUrl = ""
   }) : super(key: key);
 
   final BuildContext context;
+  final bool editStatus;
+  final String photoUrl;
 
   Future getImage() async {
     FocusScope.of(context).requestFocus(FocusNode());
@@ -36,11 +40,17 @@ class ImageDisplay extends StatelessWidget {
               // padding: EdgeInsets.all(20),
               height: 100,
               width: 100,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black12),
-              child: Icon(
+              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.black12,
+              image: photoUrl.isNotEmpty ? DecorationImage(
+                image: NetworkImage(
+                  photoUrl
+                ),
+                fit: BoxFit.cover
+              ) : null),
+              child: photoUrl.isEmpty ? Icon(
                 Icons.person,
                 size: 45,
-              ),
+              ) : null,
             ),
           )
         : GestureDetector(

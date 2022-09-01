@@ -71,14 +71,14 @@ class MessageLog extends StatelessWidget {
                             children: [
                               Container(
                                 // color: Colors.red,
-                                width: screenWidth * 0.2,
+                                width: screenWidth * 0.18,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
-                                      height: screenHeight * 0.1,
-                                      width: screenWidth * 0.2,
+                                      height: screenHeight * 0.08,
+                                      width: screenWidth * 0.18,
                                       decoration: BoxDecoration(
                                           color: customLightColor, shape: BoxShape.circle,
                                         image: DecorationImage(
@@ -100,8 +100,8 @@ class MessageLog extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
                                       // minFontSize: 8,
-                                      maxFontSize: (screenHeight * 0.025).clamp(15, 16),
-                                      minFontSize: (screenHeight * 0.025).clamp(15, 15),
+                                      maxFontSize: (screenHeight * 0.025).clamp(14, 15),
+                                      minFontSize: (screenHeight * 0.025).clamp(14, 14),
                                       // minFontSize: screenHeight * 0.00,
                                       maxLines: 1,
                                       style: TextStyle(
@@ -287,9 +287,9 @@ class MessageLog extends StatelessWidget {
                                                               boxShadow: <BoxShadow>[
                                                                 BoxShadow(
                                                                     color: Colors.black54,
-                                                                    blurRadius: 27.0,
+                                                                    blurRadius: 5.0,
                                                                     // blurStyle: BlurStyle.normal,
-                                                                    offset: Offset(8.0, 24.75)
+                                                                    offset: Offset(0.0, 1)
                                                                 )
                                                               ],
                                                               image:photoUrl.isNotEmpty ? DecorationImage(

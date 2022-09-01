@@ -31,7 +31,6 @@ class _FlutterMapWidgetState extends State<FlutterMapWidget> {
   @override
   Widget build(BuildContext context) {
 
-    // print(FirebaseAuth.instance.currentUser?.refreshToken);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     print('flutter map');
@@ -39,9 +38,6 @@ class _FlutterMapWidgetState extends State<FlutterMapWidget> {
       stream: FirebaseStream.coordinateSnapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot){
       if(snapshot.hasData){
-        // print('000000000');
-        // print(snapshot.data.docs[0]['userId']);
-        // print(snapshot.data.docs[0]['geoPoint'].latitude);
         return  Stack(
           alignment: AlignmentDirectional.center,
           children: [
@@ -54,7 +50,7 @@ class _FlutterMapWidgetState extends State<FlutterMapWidget> {
 
                  options: MapOptions(
                    center: latLng.LatLng(snapshot.data.docs[0]["geoPoint"].latitude,snapshot.data.docs[0]["geoPoint"].longitude),
-                   zoom: 15.0,
+                   zoom: 17.0,
                  ),
                  layers: [
                    TileLayerOptions(
@@ -68,10 +64,8 @@ class _FlutterMapWidgetState extends State<FlutterMapWidget> {
                    ),
                    MarkerLayerOptions(
 
-                     // rebuild: FirebaseApi.shit(),
                      markers: [
                        for(int i=0;i< snapshot.data.docs.length;i++)
-                       // snapshot.data.docs[i].geoPoint.latitude
                          Marker(
                            width: 50.0,
                            height: 50.0,
@@ -79,35 +73,11 @@ class _FlutterMapWidgetState extends State<FlutterMapWidget> {
                            builder: (ctx) => GestureDetector(
                              onTap: () {
                                if(snapshot.data.docs[i]['userId'] != AuthData.userId) {
-                                 // print("000000000000000");
-                                 // print(snapshot.data.docs[i]['userId']);
-                                 // print(AuthData.userId);
-                                 // print(i);
                                  final pProfileVisibility = Provider.of<ProfileVisibilityProvider>(
                                      context, listen: false);
                                  pProfileVisibility.changeI(i);
                                  pProfileVisibility.changeStatus(true);
                                }
-                               // showDialog(
-                               //     context: context,
-                               //     barrierColor: Colors.black45,
-                               //     builder: (BuildContext context) {
-                               //       return Visibility(
-                               //           visible: Provider.of<BottomNavigationIndex>(context).getIndex() == 0,
-                               //           child: BottomContainer());
-                               //     });
-
-                               // showModalBottomSheet(
-                               //   // barrierColor: Colors.red,
-                               //   backgroundColor: Colors.transparent,
-                               //     context: context,
-                               //     enableDrag: false,
-                               //     builder:(BuildContext context){
-                               //       return Visibility(
-                               //         visible: Provider.of<BottomNavigationIndex>(context).getIndex() ==0,
-                               //           child: BottomContainer());
-                               //     });
-                               print('hello');
                              },
                              child: Image(
                                  height: 80,
@@ -118,21 +88,6 @@ class _FlutterMapWidgetState extends State<FlutterMapWidget> {
                                    "images/marker.png",
                                  )
                              ),
-
-                             // Container(
-                             //   // height: 40,
-                             //   // width: 40,
-                             //   decoration: BoxDecoration(
-                             //     shape: BoxShape.values[BoxShape.circle.index],
-                             //     // color: i==0 ? Colors.red : Colors.blue,
-                             //     image: DecorationImage(
-                             //       image: AssetImage(
-                             //         "images/marker.png",
-                             //       )
-                             //     )
-                             //     // borderRadius: BorderRadius.only(bottomLeft :Radius.circular(140),bottomRight:Radius.circular(240) )
-                             //   ),
-                             // ),
                            ),
                          ),
                      ],
@@ -144,8 +99,6 @@ class _FlutterMapWidgetState extends State<FlutterMapWidget> {
                return Center(
                  child: LoadingAnimationWidget.threeArchedCircle(
                    color: Colors.lightBlueAccent,
-                   // secondRingColor: Colors.blue,
-                   // thirdRingColor: Colors.white,
                    size: 45,
                  ),
                );
@@ -192,8 +145,6 @@ class _FlutterMapWidgetState extends State<FlutterMapWidget> {
       else return Center(
         child: LoadingAnimationWidget.threeArchedCircle(
           color: Colors.lightBlueAccent,
-          // secondRingColor: Colors.blue,
-          // thirdRingColor: Colors.white,
           size: 45,
         ),
       );

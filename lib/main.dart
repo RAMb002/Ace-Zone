@@ -24,6 +24,7 @@ import 'package:chadate_alpha/my_provider/search_screen/other_user.dart';
 import 'package:chadate_alpha/my_provider/search_screen/third_chat.dart';
 import 'package:chadate_alpha/my_provider/stream/client_and_channel.dart';
 import 'package:chadate_alpha/screens/authenticiation/create_account_screen/create_account_screen.dart';
+import 'package:chadate_alpha/screens/authenticiation/create_account_screen/detail_screen.dart';
 import 'package:chadate_alpha/screens/authenticiation/create_account_screen/new_create_account.dart';
 import 'package:chadate_alpha/screens/authenticiation/create_account_screen/phone_authentication_screen.dart';
 import 'package:chadate_alpha/screens/authenticiation/create_account_screen/reset_password_screen.dart';
@@ -188,6 +189,7 @@ class MyApp extends StatelessWidget {
           },
           // initialRoute: WelcomeScreen.name,
           home: const LoadingScreenAlpha(),
+          // home: const DetailScreen(editStatus: true),
         ),
       ),
     );

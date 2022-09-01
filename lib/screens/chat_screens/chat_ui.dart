@@ -22,8 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 
-// import 'package:stream_chat_flutter/stream_chat_flutter.dart'as stream;
-// import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart' as stream;
 
 import 'package:provider/provider.dart';
 
@@ -40,17 +38,13 @@ class ChatUI extends StatefulWidget {
   final String userName;
   final String userImageProfile;
   bool status;
-  // final double offset;
 
-  // final stream.StreamChatClient client;
-  // final stream.Channel channel;
 
   @override
   State<ChatUI> createState() => _ChatUIState();
 }
 
 class _ChatUIState extends State<ChatUI> {
-  // final client = stream.StreamChatClient(Config.streamApiKey,logLevel: stream.Level.SEVERE);
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final ScrollController _timeScrollController = ScrollController();
@@ -67,8 +61,6 @@ class _ChatUIState extends State<ChatUI> {
     // TODO: implement initState
     final pScroll = Provider.of<ChatMessageProvider>(context, listen: false);
     _scrollController.addListener(() {
-      // print(_scrollController.position.maxScrollExtent);
-      // print(_scrollController.offset);
       pScroll.changeOffset(_scrollController.position.maxScrollExtent);
       pScroll.changeScrollOffset(_scrollController.offset);
     });
@@ -84,32 +76,14 @@ class _ChatUIState extends State<ChatUI> {
     super.dispose();
   }
 
-  // void assignChannel()async{
-  //   channel = await StreamApi.createChannel(
-  //       client, type: 'sample', id: user!.uid);
-  // }
-  // void streamInit()async{
-  //   await StreamApi.initUser(
-  //       widget.client, userName:"ram",
-  //       urlImage: user!.photoURL.toString(),
-  //       id: user!.uid,
-  //       token: user!.refreshToken.toString());
-  // }
   @override
   Widget build(BuildContext context) {
-    // final ScrollController _timeScrollController = ScrollController(initialScrollOffset: _scrollController.offset);
-
 
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    // final ThemeData theme = Theme.of(context);
-    print((screenHeight * 0.0220));
-    print((screenHeight * 0.015));
-    // print(widget.otherUser);
-    // print(AuthData.userId);
-    print("chat ui screen");
-    // print(Provider.of<HomeScreenSubIndexProvider>(context, listen: false).subIndex());
-    // print(widget.otherUser);
+    // print((screenHeight * 0.0220));
+    // print((screenHeight * 0.015));
+
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -128,7 +102,6 @@ class _ChatUIState extends State<ChatUI> {
                   constraints: BoxConstraints(),
                   onPressed: () {
                     if (widget.status) {
-                      print("dishfoishfoihfsifhsoufhsoifhoifshfoshfosihfsoifhoifhsofhsofih");
                       Provider.of<ThirdChat>(context, listen: false).changeStatus(false);
                       Provider.of<ScrollAppBarColor>(context, listen: false).changeOffSetValue(0);
                     }
@@ -198,40 +171,6 @@ class _ChatUIState extends State<ChatUI> {
           ),
         ),
       ),
-      // AppBar(
-      //   leading:
-      //   elevation: 0,
-      //   iconTheme: IconThemeData(
-      //       color: theme.primaryColorDark
-      //   ),
-      //   backgroundColor: theme.scaffoldBackgroundColor,
-      //   title: Row(
-      //     children: [
-      //       Container(
-      //         height: 45,
-      //         width: 45,
-      //         decoration: BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           color: Colors.lightBlueAccent,
-      //
-      //         ),
-      //       ),
-      //       SizedBox(width: 12,),
-      //       Container(
-      //         width: screenWidth * 0.5,
-      //         child: Text('Rambushfiushfisuhfsiufhsiufho',
-      //           overflow: TextOverflow.ellipsis,
-      //           maxLines: 1,
-      //           style: TextStyle(
-      //             fontSize: (screenHeight * 0.02).clamp(16, 18),
-      //               color: theme.primaryColorDark
-      //           ),),
-      //       )
-      //     ],
-      //   ),
-      //
-      //
-      // ) ,
       body: PageView(
         // pageSnapping: false,
         padEnds: true,
@@ -261,98 +200,10 @@ class _ChatUIState extends State<ChatUI> {
           ),
 
 
-          // SingleChildScrollView(
-          //   controller: _scrollController,
-          //   child: StreamBuilder(
-          //       stream: FirebaseStream.privateChat(AuthData.userId, widget.otherUser),
-          //       builder: (BuildContext context,AsyncSnapshot snapshot){
-          //         if(snapshot.hasData){
-          //           SchedulerBinding.instance.addPostFrameCallback((_) {
-          //             // if(_scrollController.hasClients){
-          //             _scrollController.animateTo(_scrollController.position.maxScrollExtent
-          //                 ,duration: Duration(milliseconds: 100),curve: Curves.easeIn);
-          //             // }
-          //
-          //           });
-          //           print(snapshot.data.docs.length);
-          //           return ListView.builder(
-          //               shrinkWrap: true,
-          //               physics: NeverScrollableScrollPhysics(),
-          //               // controller: _scrollController,
-          //               itemCount:snapshot.data.docs.length ,
-          //               itemBuilder: (context,index){
-          //                 var data = snapshot.data.docs[index];
-          //                 var timeStamp = data["timeStamp"];
-          //                 bool userDecision = AuthData.userId == data['currentUserId'] ;
-          //
-          //                 // var borderSharp= 0;
-          //                 // if(index>=1){
-          //                 //   if(snapshot)
-          //                 //   borderSharp = snapshot.data.docs[index-1]['currentUserId'];
-          //                 // }
-          //                 // print(data);
-          //                 return Column(
-          //                   children: [
-          //                     Row(
-          //                       mainAxisAlignment:MainAxisAlignment.start,
-          //                       children: [
-          //                         Container(
-          //                           padding: EdgeInsets.symmetric(horizontal: 12,vertical: 10),
-          //                           constraints: BoxConstraints(
-          //                             maxWidth: screenWidth * 0.7,
-          //                           ),
-          //                           decoration: BoxDecoration(
-          //                             color: userDecision ? theme.colorScheme.onSecondaryContainer : Colors.lightBlueAccent,
-          //                             borderRadius: BorderRadius.all(Radius.circular(20)),
-          //                           ),
-          //                           child: Text(
-          //                              DateFormat('hh:mm a').format(timeStamp.toDate()),
-          //                             style: TextStyle(
-          //                                 color: Colors.white,
-          //                                 // fontSize: 14
-          //                                 fontSize: (screenHeight * 0.02).clamp(15, 16)
-          //                             ),
-          //                           ),
-          //                         )
-          //                       ],
-          //                     ),
-          //                     SizedBox(height: 10,),
-          //                   ],
-          //                 );
-          //               });
-          //
-          //         }
-          //         // else return Center(child: CircularProgressIndicator(),);
-          //         else return Container();
-          //       }
-          //   ),
-          // )
-          // Scaffold(backgroundColor: Colors.black,)
+
         ],
       ),
-      // floatingActionButton: Container(
-      //   constraints: BoxConstraints(
-      //     maxWidth: 300
-      //   ),
-      //   width: 500,
-      //   height: 500,
-      //   child: Row(
-      //     children: [
-      //       ListTile(
-      //         leading: IconButton(
-      //           color: Colors.grey,
-      //           icon: Icon(Icons.camera_alt),
-      //           onPressed: (){},
-      //         ),
-      //         title: Container(
-      //           height: 20,
-      //           width: 50,
-      //           color: Colors.red,
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      // ),
+
       extendBody: true,
       floatingActionButton: Container(
         width: screenWidth - 30,
@@ -456,150 +307,130 @@ class ChatData extends StatelessWidget {
             left: kHorizontalPadding + 2,
             right: kHorizontalPadding + 2,
             top: 15,
-            bottom: screenHeight * 0.125),
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: StreamBuilder(
-              stream: FirebaseStream.privateChat(AuthData.userId, widget.otherUser),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    if (timeStatus) {
-                      final pScroll = Provider.of<ChatMessageProvider>(context, listen: false);
-                      _scrollController.jumpTo(pScroll.scrollOffset);
-                    }
-                    // if(_scrollController.hasClients){
-                    if (!timeStatus) {
-                      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-                          duration: Duration(milliseconds: 100), curve: Curves.easeIn);
-                    }
-                    // }
-                  });
-                  print(snapshot.data.docs.length);
-                  return ListView.builder(
-                      // key: PageStorageKey(0),
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      // controller: _scrollController,
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) {
-                        // if (timeStatus) {
-                        //   print(_scrollController.offset);
-                        //   print("timeee");
-                        // } else {
-                        //   print(_scrollController.offset);
-                        //   print('no timee');
-                        // }
-                        var data = snapshot.data.docs[index];
-                        // var timeStamp = data["timeStamp"];
-                        bool userDecision = AuthData.userId == data['currentUserId'];
-                        // String otherUserId = data["currentUserId"];
+            bottom: screenWidth * 0.2),
+        child: StreamBuilder(
+            stream: FirebaseStream.privateChat(AuthData.userId, widget.otherUser),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+                  if (timeStatus) {
+                    final pScroll = Provider.of<ChatMessageProvider>(context, listen: false);
+                    _scrollController.jumpTo(pScroll.scrollOffset);
+                  }
+                  // if(_scrollController.hasClients){
+                  if (!timeStatus) {
+                    _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+                        duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+                  }
+                  // }
+                });
+                print(snapshot.data.docs.length);
+                return ListView.builder(
+                    controller: _scrollController,
+                    itemCount: snapshot.data.docs.length,
+                    itemBuilder: (context, index) {
+                      var data = snapshot.data.docs[index];
+                      bool userDecision = AuthData.userId == data['currentUserId'];
 
-                        String time = DateFormat('hh:mm a').format(data["timeStamp"].toDate());
+                      String time = DateFormat('hh:mm a').format(data["timeStamp"].toDate());
 
-                        // var borderSharp= 0;
-                        // if(index>=1){
-                        //   if(snapshot)
-                        //   borderSharp = snapshot.data.docs[index-1]['currentUserId'];
-                        // }
-                        // print(data);
-                        return Column(
-                          children: [
-                            !timeStatus
-                                ? Row(
-                                    mainAxisAlignment:
-                                        userDecision ? MainAxisAlignment.end : MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                          constraints: BoxConstraints(
-                                            maxWidth: screenWidth * 0.7,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: userDecision
-                                                ? theme.colorScheme.onSecondaryContainer
-                                                : Colors.lightBlueAccent,
-                                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                                          ),
-                                          child:Text(
-                                                data['message'],
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    // fontSize: 14
-                                                    fontSize: (screenHeight * 0.02).clamp(15, 16)),
-                                              )
-                                           )
-                                    ],
-                                  )
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                          constraints: BoxConstraints(
-                                            maxWidth: screenWidth * 0.7,
-                                            minWidth: 200
-                                          ),
-                                          child: Stack(
-                                                children: [
-                                                  Text(
-                                                    data['message'],
-                                                    style: TextStyle(
-                                                        color: theme.scaffoldBackgroundColor,
-                                                        // fontSize: 14
-                                                        fontSize: (screenHeight * 0.02).clamp(15, 16)),
-                                                  ),
-                                                  Positioned(
-                                                    left:0,
-                                                    top: 0,
-                                                    bottom: 0,
-                                                    child:    Container(
-                                                      // color: Colors.red,
-                                                      child: Row(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Container(
-                                                            height: (screenHeight * 0.0220).clamp(15, 17),
-                                                            width: (screenHeight * 0.0220).clamp(15, 17),
-                                                            decoration: BoxDecoration(
-                                                              shape: BoxShape.circle,
-                                                              border: Border.all(color: theme.primaryColorDark)
-                                                            ),
-                                                            child: Center(child: Icon(userDecision ? Icons.arrow_forward_rounded : Icons.arrow_back_outlined,size: (screenHeight * 0.015).clamp(10, 12),color: theme.primaryColorDark,)),
+                      return Column(
+                        children: [
+                          !timeStatus
+                              ? Row(
+                                  mainAxisAlignment:
+                                      userDecision ? MainAxisAlignment.end : MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                        constraints: BoxConstraints(
+                                          maxWidth: screenWidth * 0.7,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: userDecision
+                                              ? theme.colorScheme.onSecondaryContainer
+                                              : Colors.lightBlueAccent,
+                                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                                        ),
+                                        child:Text(
+                                              data['message'],
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  // fontSize: 14
+                                                  fontSize: (screenHeight * 0.02).clamp(15, 16)),
+                                            )
+                                         )
+                                  ],
+                                )
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                        constraints: BoxConstraints(
+                                          maxWidth: screenWidth * 0.7,
+                                          minWidth: 200
+                                        ),
+                                        // color: Colors.transparent,
+                                        child: Stack(
+                                              children: [
+                                                Text(
+                                                  data['message'],
+                                                  style: TextStyle(
+                                                      color: theme.scaffoldBackgroundColor,
+                                                      // fontSize: 14
+                                                      fontSize: (screenHeight * 0.02).clamp(15, 16)),
+                                                ),
+                                                Positioned(
+                                                  left:0,
+                                                  top: 0,
+                                                  bottom: 0,
+                                                  child:    Container(
+                                                    color: theme.scaffoldBackgroundColor,
+                                                    child: Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Container(
+                                                          height: (screenHeight * 0.0220).clamp(15, 17),
+                                                          width: (screenHeight * 0.0220).clamp(15, 17),
+                                                          decoration: BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            border: Border.all(color: theme.primaryColorDark)
                                                           ),
-                                                          SizedBox(width: 10,),
-                                                          Container(
-                                                            color: theme.scaffoldBackgroundColor,
-                                                            width: screenWidth * 0.9,
-                                                            height:1000,
-                                                            child: Text(
-                                                              time ,
-                                                              style: TextStyle(
-                                                                  color: theme.primaryColorDark,
-                                                                  // fontSize: 14
-                                                                  fontSize: (screenHeight * 0.018).clamp(12, 14)),
-                                                            ),
+                                                          child: Center(child: Icon(userDecision ? Icons.arrow_forward_rounded : Icons.arrow_back_outlined,size: (screenHeight * 0.015).clamp(10, 12),color: theme.primaryColorDark,)),
+                                                        ),
+                                                        SizedBox(width: 10,),
+                                                        Container(
+                                                          color: theme.scaffoldBackgroundColor,
+                                                          width: screenWidth * 0.9,
+                                                          height:1000,
+                                                          child: Text(
+                                                            time ,
+                                                            style: TextStyle(
+                                                                color: theme.primaryColorDark,
+                                                                // fontSize: 14
+                                                                fontSize: (screenHeight * 0.018).clamp(12, 14)),
                                                           ),
-                                                        ],
-                                                      ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  )
-                                                ],
-                                              ),
-                                          ),
-                                    ],
-                                  ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                          ],
-                        );
-                      });
-                }
-                // else return Center(child: CircularProgressIndicator(),);
-                else
-                  return Container();
-              }),
-        ));
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                        ),
+                                  ],
+                                ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      );
+                    });
+              }
+              // else return Center(child: CircularProgressIndicator(),);
+              else
+                return Container();
+            }));
   }
 }

@@ -9,7 +9,9 @@ import 'package:chadate_alpha/my_provider/profile_screen/app_bar_color.dart';
 import 'package:chadate_alpha/my_provider/profile_screen/photourl_name.dart';
 import 'package:chadate_alpha/my_provider/search_screen/other_user.dart';
 import 'package:chadate_alpha/my_provider/search_screen/third_chat.dart';
+import 'package:chadate_alpha/screens/authenticiation/create_account_screen/detail_screen.dart';
 import 'package:chadate_alpha/screens/chat_screens/chat_ui.dart';
+import 'package:chadate_alpha/screens/page_animation/page_animation.dart';
 import 'package:chadate_alpha/screens/search_screen/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,7 @@ import 'package:provider/provider.dart';
 const borderRadius = BorderRadius.only(bottomLeft: Radius.circular(00), bottomRight: Radius.circular(00));
 
 class UserProfile extends StatefulWidget {
-  UserProfile({Key? key, this.otherUserId = "",required this.status}) : super(key: key);
+  UserProfile({Key? key, this.otherUserId = "", required this.status}) : super(key: key);
 
   String otherUserId;
   final bool status;
@@ -38,8 +40,6 @@ class _UserProfileState extends State<UserProfile> {
     // TODO: implement initState
     super.initState();
 
-
-
     if (widget.otherUserId.isEmpty) {
       print('empty');
       userId = Provider.of<OtherUserProvider>(context, listen: false).otherUserId;
@@ -47,7 +47,7 @@ class _UserProfileState extends State<UserProfile> {
       print('notEmpty');
       userId = AuthData.userId;
     }
-    if(widget.status) {
+    if (widget.status) {
       print("user profile screen");
       print(Provider.of<HomeScreenSubIndexProvider>(context, listen: false).subIndex());
       print("11111111111111111111111111111111111111111111");
@@ -64,11 +64,8 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   Widget build(BuildContext context) {
-
-    final pSubIndex = Provider.of<HomeScreenSubIndexProvider>(
-        context,
-        listen: false);
-    final pThirdChat = Provider.of<ThirdChat>(context,listen: false);
+    final pSubIndex = Provider.of<HomeScreenSubIndexProvider>(context, listen: false);
+    final pThirdChat = Provider.of<ThirdChat>(context, listen: false);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     ThemeData theme = Theme.of(context);
@@ -108,6 +105,9 @@ class _UserProfileState extends State<UserProfile> {
                     String occupation = snapshot.data.docs[0]['occupation'];
                     final pAppBar = Provider.of<PhotoUrlName>(context, listen: false);
 
+                    print('ss');
+                    print(bio.isEmpty );
+                    print(bio.length);
                     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                       pAppBar.changePhotoUrl(photoUrl);
                       pAppBar.changeUserName(name);
@@ -122,20 +122,21 @@ class _UserProfileState extends State<UserProfile> {
                               alignment: AlignmentDirectional.center,
                               children: [
                                 Container(
-                                  height: screenHeight * 0.44,
+                                  // height: screenHeight * 0.44,
+                                  height: screenWidth * 0.735,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: NetworkImage(photoUrl
                                               // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYSizgg0zrW_4-qDJhf3nwZUmqxKcwL6sljw&usqp=CAU",
                                               ),
                                           fit: BoxFit.cover),
-                                      color: Colors.lightBlueAccent,
+                                      color: theme.scaffoldBackgroundColor,
                                       borderRadius: borderRadius),
                                 ),
                                 Positioned(
                                     child: Container(
                                   padding: EdgeInsets.only(bottom: 0),
-                                  height: screenHeight * 0.44,
+                                  height: screenWidth * 0.735,
                                   decoration: BoxDecoration(borderRadius: borderRadius),
                                   child: ClipRect(
                                     child: BackdropFilter(
@@ -144,7 +145,7 @@ class _UserProfileState extends State<UserProfile> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius: borderRadius,
-                                          color: Colors.black.withOpacity(0.4),
+                                          color: Colors.black.withOpacity(0.1),
                                         ),
                                         // padding: EdgeInsets.all(6),
                                         // height: 50,
@@ -161,10 +162,22 @@ class _UserProfileState extends State<UserProfile> {
                                     gradient: LinearGradient(
                                         begin: Alignment.bottomCenter,
                                         end: Alignment.topCenter,
-                                        colors: [Colors.black, Colors.black12],
-                                        stops: [0, 0.45]),
+                                        colors: [Colors.black54, Colors.black12],
+                                        stops: [0, 0.2]),
                                   ),
                                 )),
+                                Positioned(
+                                    child: Container(
+                                      height: screenHeight * 0.44,
+                                      decoration: BoxDecoration(
+                                        borderRadius: borderRadius,
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [Colors.black54, Colors.black12],
+                                            stops: [0, 0.1]),
+                                      ),
+                                    )),
                                 Positioned(
                                   bottom: screenHeight * 0.16,
                                   // left: 40,
@@ -207,20 +220,12 @@ class _UserProfileState extends State<UserProfile> {
                                               fontSize: (screenHeight * 0.0307).clamp(20, 22)),
                                         )),
                                       ],
-                                    ))
+                                    )),
+
+
                               ],
                             ),
                             Container(
-                              height: screenHeight * 0.75,
-                              color: theme.colorScheme.onSecondary,
-                            )
-                          ],
-                        ),
-                        Positioned(
-                            top: screenHeight * 0.38,
-                            // left: 10,
-                            // right: 10,
-                            child: Container(
                               // height: 500,
                               width: screenWidth,
                               decoration: BoxDecoration(
@@ -228,59 +233,76 @@ class _UserProfileState extends State<UserProfile> {
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(35), topLeft: Radius.circular(35))),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 18),
+                                padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     AuthData.userId != userId
                                         ? FlatButton(
-                                            height: 45,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                                        height: 45,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                                        ),
+                                        color: Colors.lightBlueAccent,
+                                        onPressed: () {
+                                          if (widget.status) {
+                                            print('trueeee');
+                                            // pSubIndex.changeSubIndex(2);
+                                            pThirdChat.changeStatus(true);
+                                            Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) => ChatUI(
+                                                      otherUser: userId,
+                                                      userName: name,
+                                                      userImageProfile: photoUrl,
+                                                      status: true,
+                                                    )));
+                                          }
+                                        },
+                                        child: Text(
+                                          "Send message",
+                                          style: TextStyle(
+                                              fontSize: (screenHeight * 0.0238).clamp(16, 18.5),
+                                              color: Colors.white),
+                                        ))
+                                        : FlatButton(
+                                        height: 45,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                                        ),
+                                        color: Colors.lightBlueAccent,
+                                        onPressed: () {
+                                          Navigator.of(context).push(CustomPageRoute(
+                                              DetailScreen(
+                                                editStatus: true,
+                                                photoUrl: photoUrl,
+                                                officeAddress: officeAddress,
+                                                companyName: companyName,
+                                                occupation: occupation,
+                                                bio: bio,
+                                              )
+                                          ));
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
                                             ),
-                                            color: Colors.lightBlueAccent,
-                                            onPressed: () {
-                                              if(widget.status){
-                                                print('trueeee');
-                                                // pSubIndex.changeSubIndex(2);
-                                                pThirdChat.changeStatus(true);
-                                                Navigator.push(context, CupertinoPageRoute(builder: (context)=>ChatUI(
-                                                    otherUser: userId, userName: name, userImageProfile: photoUrl,status: true,)));
-                                              }
-                                            },
-                                            child: Text(
-                                              "Send message",
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              "Edit Profile",
                                               style: TextStyle(
                                                   fontSize: (screenHeight * 0.0238).clamp(16, 18.5),
                                                   color: Colors.white),
-                                            ))
-                                        : FlatButton(
-                                            height: 45,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
                                             ),
-                                            color: Colors.lightBlueAccent,
-                                            onPressed: () {
+                                          ],
+                                        )),
 
-                                            },
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.edit,
-                                                  color: Colors.white,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(
-                                                  "Edit Profile",
-                                                  style: TextStyle(
-                                                      fontSize: (screenHeight * 0.0238).clamp(16, 18.5),
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            )),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -326,15 +348,24 @@ class _UserProfileState extends State<UserProfile> {
                                         height: 8,
                                       ),
                                     ),
-                                    Bubble(
-                                      theme: theme,
-                                      heading: "Office Address",
-                                      content: officeAddress,
+                                    Visibility(
+                                      visible : officeAddress.isNotEmpty,
+                                      child: Bubble(
+                                        theme: theme,
+                                        heading: "Office Address",
+                                        content: officeAddress,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ))
+                            )
+                            // Container(
+                            //   height: screenHeight * 0.75,
+                            //   color: theme.colorScheme.onSecondary,
+                            // )
+                          ],
+                        ),
                       ],
                     );
                   } else {
@@ -455,16 +486,21 @@ class _UserProfileState extends State<UserProfile> {
                               child: Row(
                                 children: [
                                   Visibility(
-                                    visible: widget.status,
+                                      visible: widget.status,
                                       child: IconButton(
-                                        padding: EdgeInsets.zero,
-                                        constraints: BoxConstraints(),
-                                          onPressed: (){
-
+                                          padding: EdgeInsets.zero,
+                                          constraints: BoxConstraints(),
+                                          onPressed: () {
                                             print('doinggggg');
                                             pSubIndex.changeSubIndex(0);
                                             Navigator.pushNamed(context, SearchScreen.name);
-                                          }, icon: Icon(Icons.arrow_back_outlined,color:changeColor.offsetValue() > screenHeight * 0.2? theme.primaryColorDark : Colors.white,))),
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_back_outlined,
+                                            color: changeColor.offsetValue() > screenHeight * 0.2
+                                                ? theme.primaryColorDark
+                                                : Colors.white,
+                                          ))),
                                   Visibility(
                                     visible: changeColor.offsetValue() > screenHeight * 0.25,
                                     child: Row(
@@ -499,7 +535,6 @@ class _UserProfileState extends State<UserProfile> {
                                       ],
                                     ),
                                   ),
-
                                 ],
                               ),
                             ),
